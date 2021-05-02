@@ -1,0 +1,22 @@
+<table>
+    <thead>
+        <th>City</th>
+        <th>Current AQI</th>
+        <th>Last Updated</th>
+    </thead>
+    <tbody class="aqi" *ngFor="let item of table_data| keyvalue;">
+        <tr (click)="showHistoricalData(item.key);">
+            <td>{{item.key}}</td>
+            <td [ngClass]="{
+                'severe' : item.value.value > 401,
+                'very_poor' : item.value.value > 301 && item.value.value < 401,
+                'poor' : item.value.value > 201 && item.value.value < 301,
+                'moderate' : item.value.value > 101 && item.value.value < 201,
+                'satisfactory' : item.value.value > 51 && item.value.value < 101,
+                'good' : item.value.value > 0 && item.value.value < 51
+             }">{{item.value.value}}</td>
+            <td>{{item.value.time | last_updated}}</td>
+        </tr>
+    </tbody>
+</table>
+<div [chart]="aqiChart" ></div>
